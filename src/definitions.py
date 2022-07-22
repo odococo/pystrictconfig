@@ -1,7 +1,10 @@
+import logging
 from pathlib import Path
+from typing import Dict, Any
+
+logging.basicConfig(format='%(process)d-%(levelname)s-%(message)s')
 
 # folders location
-from typing import Dict, Any
 
 FOLDER_SOURCE = Path(__file__).parent
 FOLDER_ROOT = FOLDER_SOURCE.parent
