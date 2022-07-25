@@ -25,6 +25,18 @@ def test_any4():
     assert schema.validate(None)
 
 
+def test_any5():
+    schema = Any()
+
+    assert not schema.validate(None, required=True)
+
+
+def test_any6():
+    schema = Any(required=True)
+
+    assert schema.validate(None, required=False)
+
+
 def test_integer1():
     schema = Integer()
 
@@ -32,9 +44,9 @@ def test_integer1():
 
 
 def test_integer2():
-    schema = Integer(strict=False)
+    schema = Integer()
 
-    assert schema.validate(1.0)
+    assert schema.validate(1.0, strict=False)
 
 
 def test_integer3():
@@ -56,9 +68,9 @@ def test_float1():
 
 
 def test_float2():
-    schema = Float(strict=False)
+    schema = Float()
 
-    assert schema.validate(1)
+    assert schema.validate(1, strict=False)
 
 
 def test_float3():
@@ -110,9 +122,9 @@ def test_bool3():
 
 
 def test_bool4():
-    schema = Bool(strict=False)
+    schema = Bool()
 
-    assert schema.validate('SI')
+    assert schema.validate('SI', strict=False)
 
 
 def test_bool5():

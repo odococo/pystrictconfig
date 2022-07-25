@@ -1,8 +1,8 @@
 import logging
 from pathlib import Path
-from typing import Dict, Any
+from typing import Dict, Any, Callable, Type
 
-logging.basicConfig(format='%(process)d-%(levelname)s-%(message)s')
+logging.basicConfig(format='%(asctime)d-%(levelname)s-%(message)s')
 
 # folders location
 
@@ -12,3 +12,4 @@ FOLDER_DATA = Path(FOLDER_ROOT, 'data')
 
 # custom type hints
 JsonLike = Dict[str, Any]
+TypeLike = Type | Callable
