@@ -1,7 +1,7 @@
 from pathlib import Path
 import yaml
 
-from definitions import JsonLike
+from pystrictconfig import JsonLike
 from pystrictconfig.core import Any
 
 

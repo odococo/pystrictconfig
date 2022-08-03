@@ -2,7 +2,7 @@ from pathlib import Path
 
 import pytest
 
-from definitions import FOLDER_DATA
+from pystrictconfig import FOLDER_DATA
 from pystrictconfig import utils
 from pystrictconfig.core import Integer
 

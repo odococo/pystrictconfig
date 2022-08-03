@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 
-from definitions import FOLDER_ROOT
+from pystrictconfig import FOLDER_ROOT
 from pystrictconfig.custom import Port, LocalPath
 
 

@@ -2,7 +2,7 @@ import logging
 from collections import defaultdict
 from typing import Any as AnyValue, Tuple, Dict, Callable, Mapping, Sequence, Iterable
 
-from definitions import JsonLike, TypeLike
+from pystrictconfig import JsonLike, TypeLike
 
 
 class Any:

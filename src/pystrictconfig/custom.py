@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Any as AnyValue, Iterable
 
-from definitions import TypeLike
+from pystrictconfig import TypeLike
 from pystrictconfig.core import Integer, OneOf, Any, String
 
 
