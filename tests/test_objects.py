@@ -1,4 +1,4 @@
-from pystrictconfig.yamlschema import Integer, List, Map
+from pystrictconfig.core import Integer, List, Map
 
 
 class SumCalculator:

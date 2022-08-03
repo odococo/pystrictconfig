@@ -1,4 +1,6 @@
-from pystrictconfig.yamlschema import Any, Integer, Float, String, Bool
+import pytest
+
+from pystrictconfig.core import Any, Integer, Float, String, Bool, Invalid
 
 
 def test_any1():
@@ -35,6 +37,31 @@ def test_any6():
     schema = Any(required=True)
 
     assert schema.validate(None, required=False)
+
+
+def test_any7():
+    schema = Any()
+
+    with pytest.raises(TypeError):
+        schema.get(1, as_type=object)
+
+
+def test_invalid1():
+    schema = Invalid()
+
+    assert not schema.validate(1)
+
+
+def test_invalid2():
+    schema = Invalid()
+
+    assert not schema.validate('test')
+
+
+def test_invalid3():
+    schema = Invalid()
+
+    assert schema.get('test') == 'test'
 
 
 def test_integer1():

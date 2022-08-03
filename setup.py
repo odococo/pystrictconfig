@@ -36,7 +36,7 @@ setup(
     # For a discussion on single-sourcing the version across setup.py and the
     # project code, see
     # https://packaging.python.org/guides/single-sourcing-package-version/
-    version='0.0.0',  # Required
+    version='0.0.1',  # Required
     # This is a one-line description or tagline of what your project does. This
     # corresponds to the 'Summary' metadata field:
     # https://packaging.python.org/specifications/core-metadata/#summary
@@ -128,7 +128,7 @@ setup(
     #
     # For an analysis of 'install_requires' vs pip's requirements files see:
     # https://packaging.python.org/discussions/install-requires-vs-requirements/
-    install_requires=['peppercorn', 'pyyaml==6.0'],  # Optional
+    install_requires=['peppercorn', 'PyYAML==6.0'],  # Optional
     # List additional groups of dependencies here (e.g. development
     # dependencies). Users will be able to install these using the 'extras'
     # syntax, for example:
@@ -139,7 +139,7 @@ setup(
     # projects.
     extras_require={  # Optional
         'dev': ['check-manifest'],
-        'test': ['PyYAML', 'pytest', 'coverage', 'flake8'],
+        'test': ['check-manifest', 'pytest', 'pytest-cov', 'flake8'],
     },
     # If there are data files included in your packages that need to be
     # installed, specify them here.

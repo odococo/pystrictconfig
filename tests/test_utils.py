@@ -1,10 +1,13 @@
 from pathlib import Path
 
+import pytest
+
 from definitions import FOLDER_DATA
 from pystrictconfig import utils
+from pystrictconfig.core import Integer
 
 
-def test_read_yaml():
+def test_read_yaml1():
     data = utils.read_yaml(Path(FOLDER_DATA, 'simple_config.yaml'))
     file = {
         'rest': {
@@ -20,3 +23,10 @@ def test_read_yaml():
     }
 
     assert data == file
+
+
+def test_read_yaml2():
+    schema = Integer()
+
+    with pytest.raises(ValueError):
+        utils.read_yaml(Path(FOLDER_DATA, 'simple_config.yaml'), schema)

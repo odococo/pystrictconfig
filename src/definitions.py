@@ -11,5 +11,5 @@ FOLDER_ROOT = FOLDER_SOURCE.parent
 FOLDER_DATA = Path(FOLDER_ROOT, 'data')
 
 # custom type hints
-JsonLike = Dict[str, Any]
+JsonLike = Dict[str, Any] | Any
 TypeLike = Type | Callable
