@@ -2,7 +2,7 @@ import logging
 from pathlib import Path
 from typing import Dict, Any, Callable, Type
 
-__version__ = '0.0.16'
+__version__ = '0.0.18'
 
 logging.basicConfig(format='%(asctime)d-%(levelname)s-%(message)s')
 
