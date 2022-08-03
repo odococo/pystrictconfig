@@ -4,7 +4,7 @@ description = "A python package to enforce correctness of configuration values"
 authors = [
     { name = "Ivan Lamperti", email = "ivan.lamperti.work@gmail.com" }
 ]
-version = "0.0.4"
+version = "0.0.17"
 license = { file = "LICENSE.txt" }
 readme = "README.md"
 requires-python = ">=3.10"
@@ -46,16 +46,12 @@ build-backend = "setuptools.build_meta"
     'current_version = "{version}"',
     'version = "{version}"'
 ]
-"README.md" = [
-    "{version}",
-    "{pep440_version}",
-]
 "src/pystrictconfig/__init__.py" = [
-    "{version}"
+    "__version__ = '{version}'"
 ]
 
 [tool.bumpver]
-current_version = "0.0.4"
+current_version = "0.0.17"
 version_pattern = "MAJOR.MINOR.PATCH"
 commit_message  = "Bump version {old_version} -> {new_version}"
 commit          = true
