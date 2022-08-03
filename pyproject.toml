@@ -1,5 +1,34 @@
+[project]
+name = "pystrictconfig"
+description = "A python package to enforce correctness of configuration values"
+version = "0.0.2"
+authors = [
+    { name = "Ivan Lamperti", email = "ivan.lamperti.work@gmail.com" }
+]
+license = { file = "LICENSE.txt" }
+readme = "README.md"
+requires-python = ">=3.10"
+keywords = ["configuration"]
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha"
+]
+dependencies = [
+    "PyYAML==6.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "tox"
+]
+
+[project.urls]
+homepage = "https://github.com/odococo/pystrictconfig"
+documentation = "https://github.com/odococo/pystrictconfig"
+repository = "https://github.com/odococo/pystrictconfig"
+
+[project.scripts]
+my-script = "my_package.module:function"
+
 [build-system]
-# These are the assumed default build requirements from pip:
-# https://pip.pypa.io/en/stable/reference/pip/#pep-517-and-518-support
 requires = ["setuptools>=43.0.0", "wheel"]
 build-backend = "setuptools.build_meta"
