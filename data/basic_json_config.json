@@ -1,0 +1,13 @@
+{
+  "integer": 1,
+  "float1": 1,
+  "float2": 2.0,
+  "string": "test",
+  "bool1": "yes",
+  "bool2": "y",
+  "bool3": "si",
+  "bool4": 1,
+  "bool5": "no",
+  "bool6": "n",
+  "bool7": 0
+}

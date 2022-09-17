@@ -24,9 +24,9 @@ def test_port3():
 
 
 def test_port4():
-    schema = Port()
+    schema = Port(strict=False)
 
-    assert schema.validate('123', strict=False)
+    assert schema.validate('123')
 
 
 def test_path1():
@@ -42,27 +42,27 @@ def test_path2():
 
 
 def test_path3():
-    schema = LocalPath()
+    schema = LocalPath(exists=True)
 
-    assert schema.validate(Path(FOLDER_ROOT, 'src'), exists=True)
+    assert schema.validate(Path(FOLDER_ROOT, 'src'))
 
 
 def test_path4():
-    schema = LocalPath()
+    schema = LocalPath(exists=False)
 
-    assert not schema.validate(Path(FOLDER_ROOT, 'src'), exists=False)
+    assert not schema.validate(Path(FOLDER_ROOT, 'src'))
 
 
 def test_path5():
-    schema = LocalPath()
+    schema = LocalPath(exists=False)
 
-    assert schema.validate(Path(FOLDER_ROOT, 'src2'), exists=False)
+    assert schema.validate(Path(FOLDER_ROOT, 'src2'))
 
 
 def test_path6():
-    schema = LocalPath()
+    schema = LocalPath(exists=True)
 
-    assert not schema.validate(Path(FOLDER_ROOT, 'src2'), exists=True)
+    assert not schema.validate(Path(FOLDER_ROOT, 'src2'))
 
 
 def test_path7():

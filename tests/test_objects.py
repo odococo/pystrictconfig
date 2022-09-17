@@ -39,46 +39,47 @@ class Name:
 
     @staticmethod
     def build(config: dict) -> 'Name':
+        print(config)
         return Name(config['firstname'], config['lastname'])
 
 
 def test_list1():
-    schema = List()
+    schema = List(data_type=Integer(), as_type=SumCalculator)
     data = range(5)
 
-    assert schema.get(data, data_type=Integer(), as_type=SumCalculator).sum() == 10
+    assert schema.get(data).sum() == 10
 
 
 def test_list2():
-    schema = List()
+    schema = List(as_type=SumCalculator)
     data = range(5)
 
-    assert schema.get(data, as_type=SumCalculator).sum() == 10
+    assert schema.get(data).sum() == 10
 
 
 def test_list3():
-    schema = List()
+    schema = List(strict=False, as_type=AvgCalculator)
     data = range(5)
 
-    assert schema.get(data, strict=False, as_type=AvgCalculator).avg() == 2.0
+    assert schema.get(data).avg() == 2.0
 
 
 def test_list4():
-    schema = List()
+    schema = List(strict=False, as_type=ProductCalculator, expand=True)
     data = range(5)
 
-    assert schema.get(data, strict=False, as_type=ProductCalculator, expand=True).product() == 0
+    assert schema.get(data).product() == 0
 
 
 def test_dict1():
-    schema = Map()
+    schema = Map(strict=False, as_type=Name.build)
     data = {'firstname': 'first', 'lastname': 'last'}
 
-    assert schema.get(data, strict=False, as_type=Name.build).name() == 'first last'
+    assert schema.get(data).name() == 'first last'
 
 
 def test_dict2():
-    schema = Map()
+    schema = Map(strict=False, expand=True, as_type=Name)
     data = {'firstname': 'first', 'lastname': 'last'}
 
-    assert schema.get(data, strict=False, expand=True, as_type=Name).name() == 'first last'
+    assert schema.get(data).name() == 'first last'

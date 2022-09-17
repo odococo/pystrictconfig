@@ -8,39 +8,39 @@ def test_list1():
 
 
 def test_list2():
-    schema = List()
+    schema = List(strict=False)
 
-    assert schema.validate([1, 2, 3], strict=False)
+    assert schema.validate([1, 2, 3])
 
 
 def test_list3():
-    schema = List()
+    schema = List(data_type=Integer())
 
-    assert schema.validate([1, 2, 3], data_type=Integer())
+    assert schema.validate([1, 2, 3])
 
 
 def test_list4():
-    schema = List()
+    schema = List(data_type=Integer())
 
-    assert not schema.validate([1.0, 2.0, 3.0], data_type=Integer())
+    assert not schema.validate([1.0, 2.0, 3.0])
 
 
 def test_list5():
-    schema = List()
+    schema = List(data_type=Integer(strict=False))
 
-    assert schema.validate([1.0, 2.0, 3.0], data_type=Integer(strict=False))
+    assert schema.validate([1.0, 2.0, 3.0])
 
 
 def test_list6():
-    schema = List()
+    schema = List(data_type=Integer())
 
-    assert schema.get([1.0, 2.0, 3.0], data_type=Integer()) == [1, 2, 3]
+    assert schema.get([1.0, 2.0, 3.0]) == [1, 2, 3]
 
 
 def test_list7():
-    schema = List()
+    schema = List(data_type=Integer())
 
-    assert not schema.validate(1, data_type=Integer())
+    assert not schema.validate(1)
 
 
 def test_map1():
@@ -50,9 +50,9 @@ def test_map1():
 
 
 def test_map2():
-    schema = Map()
+    schema = Map(strict=False)
 
-    assert schema.validate({1: 2}, strict=False)
+    assert schema.validate({1: 2})
 
 
 def test_map3():
@@ -62,33 +62,33 @@ def test_map3():
 
 
 def test_map4():
-    schema = Map()
+    schema = Map(schema={'nest1': Integer()})
 
-    assert not schema.validate({'nest1': 1.0}, schema={'nest1': Integer()})
+    assert not schema.validate({'nest1': 1.0})
 
 
 def test_map5():
-    schema = Map()
+    schema = Map(schema={'nest1': Integer(strict=False)})
 
-    assert schema.validate({'nest1': 1.0}, schema={'nest1': Integer(strict=False)})
+    assert schema.validate({'nest1': 1.0})
 
 
 def test_map6():
-    schema = Map()
+    schema = Map(schema={'nest1': Integer()})
 
-    assert not schema.validate({'nest1': 1.0}, schema={'nest1': Integer()})
+    assert not schema.validate({'nest1': 1.0})
 
 
 def test_map7():
-    schema = Map()
+    schema = Map(schema={'nest1': Integer()})
 
-    assert not schema.validate({}, schema={'nest1': Integer()})
+    assert not schema.validate({})
 
 
 def test_map8():
-    schema = Map()
+    schema = Map(schema={'nest1': Integer()}, strict=False)
 
-    assert schema.validate({}, schema={'nest1': Integer()}, strict=False)
+    assert schema.validate({})
 
 
 def test_enum1():
@@ -116,9 +116,9 @@ def test_enum4():
 
 
 def test_enum5():
-    schema = Enum(valid_values=range(3))
+    schema = Enum(valid_values=range(3), required=True)
 
-    assert not schema.validate(None, required=True)
+    assert not schema.validate(None)
 
 
 def test_enum6():
@@ -128,21 +128,21 @@ def test_enum6():
 
 
 def test_enum7():
-    schema = Enum(valid_values=['1', '2', '3'])
+    schema = Enum(valid_values=['1', '2', '3'], strict=False)
 
-    assert schema.validate(1, strict=False)
+    assert schema.validate(1)
 
 
 def test_enum8():
-    schema = Enum(valid_values=['1', 'test', '3'])
+    schema = Enum(valid_values=['1', 'test', '3'], strict=False)
 
-    assert schema.validate(1.0, strict=False)
+    assert schema.validate(1.0)
 
 
 def test_enum9():
-    schema = Enum(valid_values=[1, None, '3'])
+    schema = Enum(valid_values=[1, None, '3'], strict=False)
 
-    assert schema.validate('1', strict=False)
+    assert schema.validate('1')
 
 
 def test_enum10():
@@ -152,9 +152,9 @@ def test_enum10():
 
 
 def test_enum11():
-    schema = Enum(valid_values=['1', None, '3'])
+    schema = Enum(valid_values=['1', None, '3'], required=True)
 
-    assert not schema.validate(None, required=True)
+    assert not schema.validate(None)
 
 
 def test_oneof1():

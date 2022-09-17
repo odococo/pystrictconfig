@@ -15,4 +15,4 @@ FOLDER_DATA = Path(FOLDER_ROOT, 'data')
 
 # custom type hints
 JsonLike = Dict[str, Any] | Any
-TypeLike = Type | Callable
+TypeLike = Callable | Type
