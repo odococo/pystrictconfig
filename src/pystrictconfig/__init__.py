@@ -1,8 +1,9 @@
+import importlib.metadata
 import logging
 from pathlib import Path
 from typing import Dict, Any, Callable, Type
 
-__version__ = '0.0.19'
+__version__ = importlib.metadata.version(__package__ or __name__)
 
 logging.basicConfig(format='%(asctime)d-%(levelname)s-%(message)s')
 

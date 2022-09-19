@@ -29,7 +29,7 @@ def test_read_yaml2():
     schema = Integer()
 
     with pytest.raises(ValueError):
-        not utils.validate_yaml(Path(FOLDER_DATA, 'basic_yaml_config.yaml'), schema)
+        utils.validate_yaml(Path(FOLDER_DATA, 'basic_yaml_config.yaml'), schema)
 
 
 def test_read_json1():

@@ -13,7 +13,8 @@ classifiers = [
     "Development Status :: 2 - Pre-Alpha"
 ]
 dependencies = [
-    "PyYAML==6.0"
+    "PyYAML==6.0",
+    "click"
 ]
 
 [project.optional-dependencies]
@@ -21,6 +22,7 @@ dev = [
     "tox",
     "bumpver",
     "pip-tools",
+    "twine"
 ]
 test = [
     "check-manifest",
@@ -46,9 +48,6 @@ build-backend = "setuptools.build_meta"
     'current_version = "{version}"',
     'version = "{version}"'
 ]
-"src/pystrictconfig/__init__.py" = [
-    "__version__ = '{version}'"
-]
 
 [tool.bumpver]
 current_version = "0.0.19"
@@ -56,4 +55,4 @@ version_pattern = "MAJOR.MINOR.PATCH"
 commit_message  = "Bump version {old_version} -> {new_version}"
 commit          = true
 tag             = true
-push            = false
+push            = true
