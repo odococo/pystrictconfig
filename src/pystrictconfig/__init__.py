@@ -1,7 +1,7 @@
 import importlib.metadata
 import logging
 from pathlib import Path
-from typing import Dict, Any, Callable, Type
+from typing import Dict, Any, Callable, Type, Union
 
 __version__ = importlib.metadata.version(__package__ or __name__)
 
@@ -15,5 +15,5 @@ FOLDER_ROOT = FOLDER_SOURCE.parent
 FOLDER_DATA = Path(FOLDER_ROOT, 'data')
 
 # custom type hints
-JsonLike = Dict[str, Any] | Any
-TypeLike = Callable | Type
+JsonLike = Union[Dict[str, Any], Any]
+TypeLike = Union[Callable, Type]

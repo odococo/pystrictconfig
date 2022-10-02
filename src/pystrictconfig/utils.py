@@ -2,6 +2,7 @@ import json
 from pathlib import Path
 
 import logging
+from typing import Union
 
 import yaml
 
@@ -9,7 +10,7 @@ from pystrictconfig import JsonLike
 from pystrictconfig.core import Any
 
 
-def validate_yaml(path: str | Path, schema: Any = Any()) -> JsonLike:
+def validate_yaml(path: Union[str, Path], schema: Any = Any()) -> JsonLike:
     """
     Read a yaml file with a schema.
 
@@ -26,7 +27,7 @@ def validate_yaml(path: str | Path, schema: Any = Any()) -> JsonLike:
         raise ValueError
 
 
-def validate_json(path: str | Path, schema: Any = Any()) -> JsonLike:
+def validate_json(path: Union[str, Path], schema: Any = Any()) -> JsonLike:
     """
     Read a json file with a schema.
 
