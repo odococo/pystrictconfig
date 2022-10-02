@@ -4,7 +4,7 @@ description = "A python package to enforce correctness of configuration values"
 authors = [
     { name = "Ivan Lamperti", email = "ivan.lamperti.work@gmail.com" }
 ]
-version = "0.0.26"
+version = "0.0.27"
 license = { file = "LICENSE.txt" }
 readme = "README.md"
 requires-python = ">=3.9"
@@ -50,7 +50,7 @@ build-backend = "setuptools.build_meta"
 ]
 
 [tool.bumpver]
-current_version = "0.0.26"
+current_version = "0.0.27"
 version_pattern = "MAJOR.MINOR.PATCH"
 commit_message  = "Bump version {old_version} -> {new_version}"
 commit          = true
