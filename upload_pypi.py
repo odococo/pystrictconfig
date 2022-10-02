@@ -17,7 +17,7 @@ def main(username: str, password: str, to_pypi: bool):
     if to_pypi:
         build([])
         check(['dist/*'])
-        upload([f'-u {username}', f'-p {password}', 'dist/*'])
+        upload([f'-u "{username}"', f'-p "{password}"', 'dist/*'])
         print('Uploaded to PyPi')
 
 
