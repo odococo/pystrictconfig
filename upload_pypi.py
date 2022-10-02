@@ -13,8 +13,12 @@ from twine.commands.upload import main as upload
 @click.option('--to-pypi/--no-to-pypi', default=True)
 def main(username: str, password: str, to_pypi: bool):
     shutil.rmtree('dist', ignore_errors=True)
-    update(['--patch'])
+    try:
+        update(['--patch'])
+    except SystemExit:
+        pass
     if to_pypi:
+        return
         build([])
         check(['dist/*'])
         upload(['-u', f'"{username}"', '-p', f'"{password}"', 'dist/*'])
