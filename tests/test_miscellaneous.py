@@ -1,3 +1,5 @@
+from dataclasses import dataclass
+
 import pytest
 
 from pystrictconfig.core import Any, Map, Schema, Integer
@@ -66,3 +68,15 @@ def test_metaclass3():
         pass
 
     X()
+
+
+def test_metaclass4():
+    @dataclass
+    class X(metaclass=Schema):
+        _schema = Map(schema={
+            'x': Integer()
+        })
+
+        x: int = 42
+
+    X(43)
