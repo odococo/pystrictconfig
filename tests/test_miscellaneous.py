@@ -1,4 +1,6 @@
-from pystrictconfig.core import Any, Map
+import pytest
+
+from pystrictconfig.core import Any, Map, Schema, Integer
 
 
 def test_update1():
@@ -31,3 +33,36 @@ def test_clone3():
 
     assert not schema == schema.clone().update_config(schema={'test2': Any()}), \
         'A deepcopy of the schema is executed, not a shallow copy'
+
+
+def test_metaclass1():
+    class X(metaclass=Schema):
+        _schema: Map = Map(schema={
+            'x': Integer()
+        })
+
+        def __init__(self, x: int):
+            self.x = x
+
+    assert X(1).x == 1, 'A class with a schema should not raise exception if it is valid'
+
+
+def test_metaclass2():
+    class X(metaclass=Schema):
+        _schema: Map = Map(schema={
+            'x': Integer()
+        })
+
+        def __init__(self, x: int, y: float):
+            self.x = x
+            self.y = y
+
+    with pytest.raises(AssertionError):
+        X(1, 2)
+
+
+def test_metaclass3():
+    class X(metaclass=Schema):
+        pass
+
+    X()

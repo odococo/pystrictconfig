@@ -2,7 +2,7 @@ import logging
 from collections import defaultdict
 from copy import deepcopy
 from dataclasses import dataclass
-from typing import Any as AnyValue, Tuple, Callable, Mapping, Sequence, Iterable
+from typing import Any as AnyValue, Tuple, Callable, Mapping, Sequence, Iterable, Dict
 
 from pystrictconfig import JsonLike, TypeLike
 
@@ -294,6 +294,29 @@ class Enum(Any):
                 return False
 
         return True
+
+
+class Schema(type):
+    def __new__(mcs, name: str, bases: Tuple[type, ...], dict_params: Dict):
+        schema: Map = dict_params.get('_schema', Map(strict=False))
+        assert isinstance(schema, Map), 'Schema must be an instance of Map!'
+        dict_params['__init__'] = mcs.enforce_schema(schema, dict_params.get('__init__', mcs.empty_init))
+        obj = super().__new__(mcs, name, bases, dict_params)
+
+        return obj
+
+    @staticmethod
+    def empty_init(obj, *args, **kwargs) -> AnyValue:
+        pass
+
+    @staticmethod
+    def enforce_schema(schema: Map, init: Callable) -> Callable:
+        def wrapper(obj, *args, **kwargs) -> None:
+            init(obj, *args, **kwargs)
+
+            assert schema.validate(vars(obj))
+
+        return wrapper
 
 
 @dataclass
