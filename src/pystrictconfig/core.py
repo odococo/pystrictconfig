@@ -299,7 +299,7 @@ class Enum(Any):
 class Schema(type):
     def __call__(cls, *args, **kwargs) -> AnyValue:
         obj = super().__call__(*args, **kwargs)
-        fields = vars(obj)
+        fields = {key: value for key, value in vars(obj).items() if not key.startswith('_')}
         if not fields:
             schema: Map = Map(strict=False)
         else:

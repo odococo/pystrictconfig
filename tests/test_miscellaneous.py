@@ -79,4 +79,20 @@ def test_metaclass4():
 
         x: int = 42
 
-    X(43)
+    X()
+
+
+def test_metaclass5():
+    @dataclass
+    class X(metaclass=Schema):
+        _schema = Map()
+
+    @dataclass
+    class Y(X):
+        _schema = Map(schema={
+            'x': Integer()
+        })
+
+        x: int = 42
+
+    Y()
