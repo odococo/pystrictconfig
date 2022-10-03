@@ -13,13 +13,15 @@ from twine.commands.upload import main as upload
 @click.option('--to-pypi/--no-to-pypi', default=True)
 def main(username: str, password: str, to_pypi: bool):
     shutil.rmtree('dist', ignore_errors=True)
-    update(['--patch'])
+    try:
+        update(['--patch'])
+    except SystemExit:
+        print('ok')
     if to_pypi:
         build([])
         check(['dist/*'])
         upload(['-u', f'"{username}"', '-p', f'"{password}"', 'dist/*'])
         print('Uploaded to PyPi')
-    print('what')
 
 
 if __name__ == '__main__':
