@@ -16,7 +16,8 @@ def main(username: str, password: str, to_pypi: bool):
     try:
         update(['--patch'])
     except SystemExit:
-        print('ok')
+        # everything ok. A completed command should exit
+        pass
     if to_pypi:
         build([])
         check(['dist/*'])
