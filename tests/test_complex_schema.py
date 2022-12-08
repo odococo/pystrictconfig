@@ -1,3 +1,5 @@
+import pytest
+
 from pystrictconfig.core import List, Integer, Map, Enum, OneOf, Any, Float, String
 
 
@@ -40,7 +42,8 @@ def test_list6():
 def test_list7():
     schema = List(data_type=Integer())
 
-    assert not schema.validate(1)
+    with pytest.raises(TypeError):
+        assert not schema.validate(1)
 
 
 def test_map1():
@@ -50,13 +53,13 @@ def test_map1():
 
 
 def test_map2():
-    schema = Map(strict=False)
+    schema = Map()
 
     assert schema.validate({1: 2})
 
 
 def test_map3():
-    schema = Map()
+    schema = Map(strict=True)
 
     assert not schema.validate({1: 2})
 
@@ -80,13 +83,13 @@ def test_map6():
 
 
 def test_map7():
-    schema = Map(schema={'nest1': Integer()})
+    schema = Map(schema={'nest1': Integer()}, strict=True)
 
     assert not schema.validate({})
 
 
 def test_map8():
-    schema = Map(schema={'nest1': Integer()}, strict=False)
+    schema = Map(schema={'nest1': Integer()})
 
     assert schema.validate({})
 
@@ -158,7 +161,7 @@ def test_enum11():
 
 
 def test_oneof1():
-    schema = OneOf()
+    schema = OneOf(valid_types=tuple())
 
     assert not schema.validate(1)
 

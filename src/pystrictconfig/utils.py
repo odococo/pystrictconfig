@@ -1,13 +1,13 @@
 import json
-from pathlib import Path
-
 import logging
+from pathlib import Path
 from typing import Union
 
 import yaml
 
 from pystrictconfig import JsonLike
 from pystrictconfig.core import Any
+from pystrictconfig.yaml_loader import CustomLoader
 
 
 def validate_yaml(path: Union[str, Path], schema: Any = Any()) -> JsonLike:
@@ -20,7 +20,7 @@ def validate_yaml(path: Union[str, Path], schema: Any = Any()) -> JsonLike:
     """
     logging.debug(f'Reading yaml file: {path}')
     with open(path, 'r') as f:
-        value = yaml.safe_load(f)
+        value = yaml.load(f, CustomLoader)
         if schema.validate(value):
             return schema.get(value)
 

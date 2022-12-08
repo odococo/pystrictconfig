@@ -1,4 +1,3 @@
-from dataclasses import dataclass
 from pathlib import Path
 from typing import Any as AnyValue, Iterable
 
@@ -6,8 +5,9 @@ from pystrictconfig import TypeLike
 from pystrictconfig.core import Integer, OneOf, Any, String
 
 
-@dataclass
 class Port(Integer):
+    yaml_tag: str = '!port'
+
     def validate(self, value: AnyValue) -> bool:
         """
         Validate a value against the validator.
@@ -23,8 +23,8 @@ class Port(Integer):
         return 0 <= value <= 65535
 
 
-@dataclass
 class LocalPath(OneOf):
+    yaml_tag: str = '!path'
     as_type: TypeLike = Path
     valid_types: Iterable[Any] = (String(), String(as_type=Path))
     exists: bool = True

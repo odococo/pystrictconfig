@@ -2,13 +2,28 @@ import logging
 from collections import defaultdict
 from copy import deepcopy
 from dataclasses import dataclass
-from typing import Any as AnyValue, Tuple, Callable, Mapping, Sequence, Iterable
+from typing import Any as AnyValue, Tuple, Callable, Mapping, Sequence, Iterable, Type, Dict
 
 from pystrictconfig import JsonLike, TypeLike
+from pystrictconfig.yaml_loader import CustomLoader
 
 
-@dataclass
-class Any:
+class YamlType(type):
+    def __new__(mcs, name: str, bases: Tuple[Type], dct: Dict):
+        clazz = super().__new__(mcs, name, bases, dct)
+        # noinspection PyTypeChecker
+        cls = dataclass(clazz)
+        if cls.yaml_constructor:
+            logging.info(f'Added constructor for {cls.yaml_tag} with {cls.yaml_constructor} for {name}')
+            # noinspection PyArgumentList
+            CustomLoader.add_constructor(cls.yaml_tag, CustomLoader.construct(cls(), cls.yaml_constructor))
+
+        return cls
+
+
+class Any(metaclass=YamlType):
+    yaml_tag: str = None
+    yaml_constructor: Callable = None
     as_type: TypeLike = None
     strict: bool = True
     required: bool = False
@@ -104,8 +119,10 @@ class Any:
         return deepcopy(self)
 
 
-@dataclass
 class Invalid(Any):
+    yaml_tag: str = None
+    yaml_constructor: Callable = CustomLoader.construct_undefined
+
     def validate(self, value: AnyValue) -> bool:
         """
         An Invalid validator which does not validate any value.
@@ -116,23 +133,28 @@ class Invalid(Any):
         return False
 
 
-@dataclass
 class Integer(Any):
+    yaml_tag: str = 'tag:yaml.org,2002:int'
+    yaml_constructor: Callable = CustomLoader.construct_yaml_int
     as_type: TypeLike = int
 
 
-@dataclass
 class Float(Any):
+    yaml_tag: str = 'tag:yaml.org,2002:float'
+    yaml_constructor: Callable = CustomLoader.construct_yaml_float
     as_type: TypeLike = float
 
 
-@dataclass
 class String(Any):
+    yaml_tag: str = 'tag:yaml.org,2002:str'
+    yaml_constructor: Callable = CustomLoader.construct_yaml_str
     as_type: TypeLike = str
 
 
 @dataclass
 class Bool(Any):
+    yaml_tag: str = 'tag:yaml.org,2002:bool'
+    yaml_constructor: Callable = CustomLoader.construct_yaml_bool
     as_type: TypeLike = bool
     yes_values: Tuple[str] = ('YES', 'Y', 'SI', '1', 'TRUE')
     no_values: Tuple[str] = ('NO', 'N', '0', 'FALSE')
@@ -154,10 +176,12 @@ class Bool(Any):
         return super().get(value)
 
 
-@dataclass
 class List(Any):
+    yaml_tag: str = 'tag:yaml.org,2002:seq'
+    yaml_constructor: Callable = CustomLoader.construct_sequence
     as_type: TypeLike = list
-    data_type: TypeLike = None
+    data_type: Any = None
+    strict: bool = False
     expand: bool = False
 
     def __post_init__(self):
@@ -200,15 +224,19 @@ class List(Any):
         @param as_type: type which require star expression
         @return: wrapper to the type
         """
+
         def wrapper(values: list):
             return as_type(*values)
+
         return wrapper
 
 
-@dataclass
 class Map(Any):
+    yaml_tag: str = 'tag:yaml.org,2002:map'
+    yaml_constructor: Callable = CustomLoader.construct_mapping
     as_type: TypeLike = dict
-    schema: JsonLike = None
+    schema: JsonLike[Any] = None
+    strict: bool = False
     expand: bool = False
 
     def __post_init__(self):
@@ -258,19 +286,20 @@ class Map(Any):
         @param as_type: type which require star expression
         @return: wrapper to the type
         """
+
         def wrapper(values: dict):
             return as_type(**values)
+
         return wrapper
 
 
-@dataclass
 class Enum(Any):
-    valid_values: Iterable[AnyValue] = tuple()
+    valid_values: Iterable[AnyValue] = (None,)
 
     def __post_init__(self):
         super().__post_init__()
         if not self.valid_values:
-            logging.warning('No valid value provided!')
+            logging.warning(f'No valid value provided for {self.__class__.__name__}!')
 
     def validate(self, value: AnyValue) -> bool:
         """
@@ -311,14 +340,13 @@ class Schema(type):
         return obj
 
 
-@dataclass
 class OneOf(Any):
-    valid_types: Iterable[Any] = tuple()
+    valid_types: Iterable[Any] = (Any(),)
 
     def __post_init__(self):
         super().__post_init__()
         if not self.valid_types:
-            logging.warning('No valid type provided!')
+            logging.warning(f'No valid type provided for {self.__class__.__name__}!')
 
     def validate(self, value: AnyValue) -> bool:
         """

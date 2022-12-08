@@ -53,7 +53,7 @@ def test_metaclass2():
     class X(metaclass=Schema):
         _schema: Map = Map(schema={
             'x': Integer()
-        })
+        }, strict=True)
 
         def __init__(self, x: int, y: float):
             self.x = x
